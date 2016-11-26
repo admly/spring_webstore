@@ -2,7 +2,7 @@ package webstore.domain;
 import java.math.BigDecimal;
 public class Product {
 private String productId;
-public String name;
+private String name;
 private BigDecimal unitPrice;
 private String description;
 private String manufacturer;
@@ -20,9 +20,25 @@ private String condition;
 		this.name = name;		
 		this.setUnitPrice(unitPrice);
 	}
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
+	}
+	public String getName(){
+		return name;
 	}
 
 	public void setUnitPrice(BigDecimal unitPrice) {
