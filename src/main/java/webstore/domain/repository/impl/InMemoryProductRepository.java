@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import webstore.domain.Product;
 import webstore.domain.repository.ProductRepository;
 
+
 @Repository
 public class InMemoryProductRepository implements ProductRepository{
 	private List<Product> listOfProducts = new ArrayList<Product>();
@@ -37,4 +38,18 @@ public class InMemoryProductRepository implements ProductRepository{
 	public List<Product> getAllProducts() {
 		return listOfProducts;
 	}
+	
+	public Product getProductById(String productId) {
+		Product productById = null;
+		for(Product product : listOfProducts) {
+			if(product!=null && product.getProductId()!=null && product.getProductId().equals(productId)){
+				productById = product;
+				break;
+				}
+		}
+		if(productById == null){
+			throw new IllegalArgumentException("Brak produktu o wskazanym id: "+ productId);
+			}
+		return productById;
+		}
 }
