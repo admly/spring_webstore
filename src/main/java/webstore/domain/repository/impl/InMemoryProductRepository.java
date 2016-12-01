@@ -18,7 +18,7 @@ public class InMemoryProductRepository implements ProductRepository{
 	
 	public InMemoryProductRepository() {
 		Product iphone = new Product("P1234","iPhone 5s", new BigDecimal(500));
-		iphone.setDescription("Apple iPhone 5s, smartfon z 4-calowym ekranem o rozdzielczości 6401136 i 8-megapikselowym aparatem");
+		iphone.setDescription("Apple iPhone 5s, smartfon z 4-calowym ekranem o rozdzielczości 640X1136 i 8-megapikselowym aparatem");
 		iphone.setCategory("Smartfon");
 		iphone.setManufacturer("Apple");
 		iphone.setUnitsInStock(1000);
