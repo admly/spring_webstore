@@ -56,7 +56,7 @@ public class InMemoryProductRepository implements ProductRepository{
 			}
 		return productById;
 		}
-	@Override
+	
 	public List<Product> getProductsByCategory(String category) {
 		List<Product> productsByCategory = new ArrayList<Product>();
 		for(Product product: listOfProducts) {
@@ -89,7 +89,33 @@ public class InMemoryProductRepository implements ProductRepository{
 		
 		productsByCategory.retainAll(productsByBrand);
 		return productsByCategory;
-		}
+	}
+
+	public List<Product> getProductsByLowPrice(BigDecimal low_price) {
+		
+		return null;
+	}
+
+	public List<Product> getProductsByHighPrice(BigDecimal high_price) {
+
+		return null;
+	}
+
+	public List<Product> getProductsByPriceInterval(Map<BigDecimal, List<BigDecimal>> priceIntervalFilter) {
+		
+		return null;
+	}
 	
+	public List <Product> getProductsByManufacturer(String manufacturer){
+		List <Product> productsByManufacturer = new ArrayList<Product>();
+		for(Product product : listOfProducts){
+			if(manufacturer.equals(product.getManufacturer())){
+				productsByManufacturer.add(product);
+			}
+		}
+		return productsByManufacturer;	
+	}
+
+		
 	
 }

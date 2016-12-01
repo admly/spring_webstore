@@ -1,5 +1,6 @@
 package webstore.domain.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,5 +13,10 @@ public interface ProductRepository {
 	Product getProductById(String productId);	
 	List <Product> getProductsByCategory(String category);
 	Set<Product> getProductsByFilter(Map<String, List<String>> filterParams);
-
+	List <Product> getProductsByLowPrice(BigDecimal low_price);
+	List <Product> getProductsByHighPrice(BigDecimal high_price);
+	List <Product> getProductsByPriceInterval(Map<BigDecimal, List<BigDecimal>> priceIntervalFilter);
+	List <Product> getProductsByManufacturer(String manufacturer);
+	
+	
 }
