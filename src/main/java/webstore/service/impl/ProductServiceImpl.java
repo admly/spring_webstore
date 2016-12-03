@@ -57,6 +57,8 @@ public class ProductServiceImpl implements ProductService {
 			Map<String, List<String>> priceIntervalParams ){
 		return productRepository.getProductsByManufacturerAndPrice(category, manufacturer, priceIntervalParams);
 	}
-	
+	public void addProduct(Product product) {
+		productRepository.addProduct(product);
+		}
 			
 }
