@@ -79,31 +79,56 @@ public class InMemoryProductRepository implements ProductRepository{
 					}
 				}
 			}
-		}
-		
+		}	
 		if(criterias.contains("category")) {
 			for(String category: filterParams.get("category")) {
 				productsByCategory.addAll(this.getProductsByCategory(category));
 			}
 		}
-		
 		productsByCategory.retainAll(productsByBrand);
 		return productsByCategory;
 	}
 
 	public List<Product> getProductsByLowPrice(BigDecimal low_price) {
-		
-		return null;
+		List <Product> productsByLowPrice = new ArrayList<Product>();
+		for(Product product : listOfProducts){
+			if(low_price.compareTo(product.getUnitPrice()) < 0){
+				productsByLowPrice.add(product);
+			}
+		}
+		return productsByLowPrice;	
 	}
+	
 
 	public List<Product> getProductsByHighPrice(BigDecimal high_price) {
-
-		return null;
+		List <Product> productsByHighPrice = new ArrayList<Product>();
+		for(Product product : listOfProducts){
+			if(high_price.compareTo(product.getUnitPrice()) > 0){
+				productsByHighPrice.add(product);
+			}
+		}
+		return productsByHighPrice;
 	}
+	
+	
 
-	public List<Product> getProductsByPriceInterval(Map<BigDecimal, List<BigDecimal>> priceIntervalFilter) {
+	public Set <Product> getProductsByPriceInterval(Map<String, List<String>> priceIntervalFilter) {
+		 Set<Product> productsByPriceHigh = new HashSet<Product>();
+		 List<Product> productsByPriceLow = new ArrayList<Product>();
+		 Set<String> criterias = priceIntervalFilter.keySet();
+		 
+		 if(criterias.contains("low")){
+			 BigDecimal low = new BigDecimal(priceIntervalFilter.get("low").get(0));
+			 			productsByPriceLow = getProductsByLowPrice(low);
+					}
+		 
+		 if(criterias.contains("high")) {
+			 BigDecimal high = new BigDecimal(priceIntervalFilter.get("high").get(0));
+			 productsByPriceHigh.addAll(this.getProductsByHighPrice(high));
+		 }
 		
-		return null;
+			productsByPriceHigh.retainAll(productsByPriceLow);
+			return productsByPriceHigh;
 	}
 	
 	public List <Product> getProductsByManufacturer(String manufacturer){
@@ -114,6 +139,29 @@ public class InMemoryProductRepository implements ProductRepository{
 			}
 		}
 		return productsByManufacturer;	
+	}
+	
+	
+	public Set <Product> getProductsByManufacturerAndPrice(String category, String manufacturer, 
+			Map<String, List<String>> priceIntervalParams ){
+		List<Product> productsByCategory = getProductsByCategory(category);
+	    List<Product> productsByManufacturer = getProductsByManufacturer(manufacturer);
+	    Set<Product> productsByPrice = new HashSet<Product>();
+	    Set<Product> filteredProducts = new HashSet<Product>();
+	    
+	    productsByPrice.addAll(getProductsByPriceInterval(priceIntervalParams));
+	    
+	    for(Product categoryProduct: productsByCategory) {
+	        for(Product manufacturerProduct: productsByManufacturer) {
+	            for(Product priceProduct: productsByPrice) {
+	                if(priceProduct.equals(manufacturerProduct) && manufacturerProduct.equals(categoryProduct)) {
+	                    filteredProducts.add(priceProduct);
+	                }
+	            }
+	        }
+	    }
+	    return filteredProducts;
+	    
 	}
 
 		

@@ -1,7 +1,10 @@
 package webstore.controller;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import webstore.domain.Product;
 import webstore.domain.repository.ProductRepository;
 import webstore.service.ProductService;
 
@@ -48,10 +52,15 @@ public class ProductController {
 		model.addAttribute("product", productService.getProductById(productId));
 		return "product";
 	}
-
 	
+	@RequestMapping("/{category}/{price}")
+	public String filterProductsByPriceAndManufacturer(@PathVariable("category") String category,
+	                             @MatrixVariable(pathVar = "price") Map<String, List<String>> priceIntervalParams,
+	                             @RequestParam("manufacturer") String manufacturer,
+	                             Model model) {
 	
+	    model.addAttribute("products", productService.getProductsByManufacturerAndPrice(category, manufacturer, priceIntervalParams));
+	    return "products";
 	
-	
-	
+	}
 }
