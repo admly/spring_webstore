@@ -9,6 +9,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,11 +76,20 @@ public class ProductController {
 		return "addProduct";
 	}
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct) {
-		productService.addProduct(newProduct);
+	public String processAddNewProductForm(@ModelAttribute("newProduct") Product productToBeAdded, 
+			BindingResult result) {
+		String[] suppressedFields = result.getSuppressedFields();
+		if (suppressedFields.length > 0) {
+			throw new RuntimeException("Próba wiązania niedozwolonych pól:" + 
+										StringUtils.arrayToCommaDelimitedString(suppressedFields));
+		}
+		productService.addProduct(productToBeAdded);
 		return "redirect:/products";
 	}
-	
+	@InitBinder
+	public void initialiseBinder(WebDataBinder binder) {
+	binder.setDisallowedFields("unitsInOrder", "discontinued");
+	}
 	
 	
 }
