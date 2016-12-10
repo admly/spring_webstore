@@ -22,7 +22,7 @@
 	</mvc:interceptors>
 
 	<mvc:resources location="/resources/" mapping="/resource/**"/>
-	<mvc:annotation-driven enable-matrix-variables="true"/>
+	<mvc:annotation-driven enable-matrix-variables="true" validator = "validator"/>
 	<context:component-scan base-package="webstore" />
 	
 	 <bean id="localeResolver"
@@ -30,7 +30,9 @@
 		<property name="defaultLocale" value="pl"/>
 	</bean>
 	 
- 
+ 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	<property name="validationMessageSource" ref="messageSource" />
+	</bean>
  
 	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	 	<property name="maxUploadSize" value="10240000"/>
