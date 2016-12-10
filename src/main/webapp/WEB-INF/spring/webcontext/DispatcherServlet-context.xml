@@ -9,11 +9,21 @@
 
 	<mvc:interceptors>
 		<bean class="webstore.interceptor.PerformanceMonitorInterceptor"/>
+		<bean class= "org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language"/>
+		</bean>
 	</mvc:interceptors>
 
 	<mvc:resources location="/resources/" mapping="/resource/**"/>
 	<mvc:annotation-driven enable-matrix-variables="true"/>
 	<context:component-scan base-package="webstore" />
+	
+	 <bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="pl"/>
+	</bean>
+	 
+ 
  
 	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	 	<property name="maxUploadSize" value="10240000"/>
@@ -50,10 +60,6 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
-	
-	
- 
  
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />

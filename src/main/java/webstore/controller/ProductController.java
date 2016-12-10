@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import webstore.domain.Product;
-import webstore.domain.repository.ProductRepository;
 import webstore.exception.NoProductsFoundUnderCategoryException;
 import webstore.exception.ProductNotFoundException;
 import webstore.service.ProductService;
@@ -108,6 +107,9 @@ public class ProductController {
 	}
 	@InitBinder
 	public void initialiseBinder(WebDataBinder binder) {
+		binder.setAllowedFields("productId", "name", "unitPrice", "description",
+				"manufacturer", "category", "unitsInStock", "productImage",
+				"language");
 }
 	
 	@ExceptionHandler(ProductNotFoundException.class)
