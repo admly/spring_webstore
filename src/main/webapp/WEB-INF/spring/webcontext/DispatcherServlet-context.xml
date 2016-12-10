@@ -12,6 +12,13 @@
 		<bean class= "org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<property name="paramName" value="language"/>
 		</bean>
+		<bean class= "webstore.interceptor.AuditingInterceptor"/>
+		<bean class="webstore.interceptor.AuditingInterceptor"/>
+		<bean class="webstore.interceptor.PromoCodeInterceptor">
+		<property name="promoCode" value="OF3RTA"/>
+		<property name="errorRedirect" value="invalidPromoCode"/>
+		<property name="offerRedirect" value="products"/>
+		</bean>
 	</mvc:interceptors>
 
 	<mvc:resources location="/resources/" mapping="/resource/**"/>
