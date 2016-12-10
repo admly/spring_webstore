@@ -31,11 +31,15 @@ import webstore.domain.Product;
 import webstore.exception.NoProductsFoundUnderCategoryException;
 import webstore.exception.ProductNotFoundException;
 import webstore.service.ProductService;
+import webstore.validator.ProductValidator;
+import webstore.validator.UnitsInStockValidator;
 
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
+	@Autowired
+	private ProductValidator productValidator;
 	
 	@Autowired
 	private ProductService productService;
@@ -114,6 +118,7 @@ public class ProductController {
 		binder.setAllowedFields("productId", "name", "unitPrice", "description",
 				"manufacturer", "category", "unitsInStock", "productImage",
 				"language");
+		binder.setValidator(productValidator);
 }
 	
 	@ExceptionHandler(ProductNotFoundException.class)
