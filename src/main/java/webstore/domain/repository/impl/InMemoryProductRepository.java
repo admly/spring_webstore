@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.stereotype.Repository;
 import webstore.domain.Product;
 import webstore.domain.repository.ProductRepository;
+import webstore.exception.ProductNotFoundException;
 
 
 @Repository
@@ -52,7 +53,7 @@ public class InMemoryProductRepository implements ProductRepository{
 				}
 		}
 		if(productById == null){
-			throw new IllegalArgumentException("Brak produktu o wskazanym id: "+ productId);
+			throw new ProductNotFoundException(productId);
 			}
 		return productById;
 		}
